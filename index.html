@@ -699,42 +699,67 @@
                     tripType: selectedTripType
                 };
                 
-                // Submit to Google Sheets
+                // Show loading state
+                document.getElementById('submit-preferences').textContent = 'Submitting...';
+                document.getElementById('submit-preferences').disabled = true;
+                
+                // Submit to Google Sheets - Replace with your deployed Apps Script URL
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec';
+                
+                // For debugging
+                console.log('Submitting data:', formData);
                 
                 fetch(scriptURL, {
                     method: 'POST',
                     body: JSON.stringify(formData),
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    mode: 'cors'
                 })
-                .then(response => {
-                    document.getElementById('confirmation-message').style.display = 'block';
-                    document.getElementById('error-message').style.display = 'none';
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response:', data);
                     
-                    // Reset form
-                    document.getElementById('name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('phone').value = '';
-                    document.getElementById('participants').value = '1';
-                    document.getElementById('experience').value = 'beginner';
-                    document.getElementById('comments').value = '';
+                    if (data.result === 'success') {
+                        document.getElementById('confirmation-message').style.display = 'block';
+                        document.getElementById('error-message').style.display = 'none';
+                        
+                        // Reset form
+                        document.getElementById('name').value = '';
+                        document.getElementById('email').value = '';
+                        document.getElementById('phone').value = '';
+                        document.getElementById('participants').value = '1';
+                        document.getElementById('experience').value = 'beginner';
+                        document.getElementById('comments').value = '';
+                        
+                        // Reset selected dates
+                        selectedDates = [];
+                        updateSelectedDatesDisplay();
+                        generateCalendar(currentMonth, currentYear);
+                        
+                        // Reset trip type
+                        tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
+                        document.querySelectorAll('.trip-type-details').forEach(detail => {
+                            detail.classList.remove('active');
+                        });
+                    } else {
+                        document.getElementById('error-message').style.display = 'block';
+                        document.getElementById('error-message').textContent = 'Server error: ' + (data.error || 'Unknown error');
+                    }
                     
-                    // Reset selected dates
-                    selectedDates = [];
-                    updateSelectedDatesDisplay();
-                    generateCalendar(currentMonth, currentYear);
-                    
-                    // Reset trip type
-                    tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
-                    document.querySelectorAll('.trip-type-details').forEach(detail => {
-                        detail.classList.remove('active');
-                    });
+                    // Reset button
+                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
+                    document.getElementById('submit-preferences').disabled = false;
                 })
                 .catch(error => {
+                    console.error('Fetch error:', error);
                     document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').textContent = 'There was an error submitting your preferences. Please try again later.';
+                    document.getElementById('error-message').textContent = 'There was an error submitting your preferences: ' + error.message;
+                    
+                    // Reset button
+                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
+                    document.getElementById('submit-preferences').disabled = false;
                 });
             });
         });
