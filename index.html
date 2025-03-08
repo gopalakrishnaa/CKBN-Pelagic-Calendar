@@ -687,6 +687,9 @@
                     return;
                 }
                 
+                // Reset error message before submission
+                document.getElementById('error-message').style.display = 'none';
+                
                 // Prepare data for submission
                 const formData = {
                     name: name,
@@ -703,10 +706,10 @@
                 document.getElementById('submit-preferences').textContent = 'Submitting...';
                 document.getElementById('submit-preferences').disabled = true;
                 
-                // Submit to Google Sheets - Replace with your deployed Apps Script URL
+                // Submit to Google Sheets
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec';
                 
-                // For debugging
+                // Log data for debugging
                 console.log('Submitting data:', formData);
                 
                 fetch(scriptURL, {
