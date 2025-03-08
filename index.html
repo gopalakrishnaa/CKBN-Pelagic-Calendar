@@ -451,349 +451,321 @@
         </div>
     </div>
 
-    The code provided appears to be a well-structured HTML document with embedded CSS and JavaScript. However, there are a few potential logical issues and improvements to consider:
-
-1. **Error Display Reset**:
-   - The error message is displayed multiple times with different contents, but it is not reset before each new validation check. This may result in multiple error messages being shown simultaneously. Ensure the error message area is cleared before showing a new error.
-
-2. **Validation for Required Fields**:
-   - The code checks if the `name`, `email`, and `phone` fields are filled, but it does not check if they are valid (e.g., valid email format). Adding more robust validation for these fields would improve the user experience.
-
-3. **Event Listener for `remove-date` Elements**:
-   - When adding the event listener to the `remove-date` elements, there is a risk that if a date is removed, the event listeners on the remaining elements may not be updated correctly. Ensure that event listeners are properly managed when the DOM is dynamically updated.
-
-4. **Potential Date Selection Duplication**:
-   - The `toggleDateSelection` function allows toggling the selection of dates but does not check for duplicate date entries in the `selectedDates` array. Ensure that each date is unique in the array.
-
-5. **Handling Edge Cases for Date Navigation**:
-   - The month navigation buttons (`prev-month` and `next-month`) do not handle edge cases for year changes correctly. Ensure that when navigating to a previous or next month, the year is adjusted correctly (e.g., moving from January to December should decrease the year).
-
-6. **Form Reset After Submission**:
-   - The form fields and selected dates are reset after successful submission, but the trip type selection is not reset. Ensure that the trip type selection is also reset after submission.
-
-7. **Error Handling in Fetch Request**:
-   - The fetch request to submit the form data has error handling, but the error message displayed to the user could be more descriptive. Consider providing more detailed error messages to help users understand the issue.
-
-Here is the updated code with some of these issues addressed:
-
-```html
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Current date information
-        const today = new Date();
-        let currentMonth = today.getMonth();
-        let currentYear = today.getFullYear();
-        
-        // Selected dates array
-        let selectedDates = [];
-        
-        // Generate the calendar
-        function generateCalendar(month, year) {
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDay = firstDay.getDay(); // Day of week (0-6)
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Current date information
+            const today = new Date();
+            let currentMonth = today.getMonth();
+            let currentYear = today.getFullYear();
             
-            // Update month display
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                                "July", "August", "September", "October", "November", "December"];
-            document.getElementById('month-display').textContent = `${monthNames[month]} ${year}`;
+            // Selected dates array
+            let selectedDates = [];
             
-            // Clear previous calendar
-            const calendarBody = document.getElementById('calendar-body');
-            calendarBody.innerHTML = '';
-            
-            // Create calendar rows and cells
-            let date = 1;
-            for (let i = 0; i < 6; i++) { // Up to 6 rows
-                const row = document.createElement('tr');
+            // Generate the calendar
+            function generateCalendar(month, year) {
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDay = firstDay.getDay(); // Day of week (0-6)
                 
-                for (let j = 0; j < 7; j++) { // 7 days in a week
-                    const cell = document.createElement('td');
+                // Update month display
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"];
+                document.getElementById('month-display').textContent = `${monthNames[month]} ${year}`;
+                
+                // Clear previous calendar
+                const calendarBody = document.getElementById('calendar-body');
+                calendarBody.innerHTML = '';
+                
+                // Create calendar rows and cells
+                let date = 1;
+                for (let i = 0; i < 6; i++) { // Up to 6 rows
+                    const row = document.createElement('tr');
                     
-                    if (i === 0 && j < startingDay) {
-                        // Empty cells before the first day of month
-                        const prevMonthLastDay = new Date(year, month, 0).getDate();
-                        const prevDate = prevMonthLastDay - (startingDay - j - 1);
-                        cell.innerHTML = `<span class="date">${prevDate}</span>`;
-                        cell.classList.add('other-month');
-                    } else if (date > daysInMonth) {
-                        // Empty cells after the last day of month
-                        const nextDate = date - daysInMonth;
-                        cell.innerHTML = `<span class="date">${nextDate}</span>`;
-                        cell.classList.add('other-month');
-                        date++;
-                    } else {
-                        // Current month cells
-                        cell.innerHTML = `<span class="date">${date}</span>`;
+                    for (let j = 0; j < 7; j++) { // 7 days in a week
+                        const cell = document.createElement('td');
                         
-                        // Highlight weekends
-                        if (j === 0 || j === 6) {
-                            cell.classList.add('weekend', 'selectable');
+                        if (i === 0 && j < startingDay) {
+                            // Empty cells before the first day of month
+                            const prevMonthLastDay = new Date(year, month, 0).getDate();
+                            const prevDate = prevMonthLastDay - (startingDay - j - 1);
+                            cell.innerHTML = `<span class="date">${prevDate}</span>`;
+                            cell.classList.add('other-month');
+                        } else if (date > daysInMonth) {
+                            // Empty cells after the last day of month
+                            const nextDate = date - daysInMonth;
+                            cell.innerHTML = `<span class="date">${nextDate}</span>`;
+                            cell.classList.add('other-month');
+                            date++;
+                        } else {
+                            // Current month cells
+                            cell.innerHTML = `<span class="date">${date}</span>`;
                             
-                            // Date string for comparison
-                            const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-                            
-                            // Check if date is already selected
-                            if (selectedDates.some(d => d.dateString === dateString)) {
-                                cell.classList.add('selected');
+                            // Highlight weekends
+                            if (j === 0 || j === 6) {
+                                cell.classList.add('weekend', 'selectable');
+                                
+                                // Date string for comparison
+                                const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+                                
+                                // Check if date is already selected
+                                if (selectedDates.some(d => d.dateString === dateString)) {
+                                    cell.classList.add('selected');
+                                }
+                                
+                                // Add click event for weekend dates
+                                cell.addEventListener('click', function() {
+                                    toggleDateSelection(this, year, month, date);
+                                });
                             }
                             
-                            // Add click event for weekend dates
-                            cell.addEventListener('click', function() {
-                                toggleDateSelection(this, year, month, date);
-                            });
+                            date++;
                         }
                         
-                        date++;
+                        row.appendChild(cell);
                     }
                     
-                    row.appendChild(cell);
-                }
-                
-                calendarBody.appendChild(row);
-                
-                // Stop if we've reached the end of the month
-                if (date > daysInMonth) {
-                    break;
+                    calendarBody.appendChild(row);
+                    
+                    // Stop if we've reached the end of the month
+                    if (date > daysInMonth) {
+                        break;
+                    }
                 }
             }
-        }
-        
-        // Toggle date selection
-        function toggleDateSelection(cell, year, month, day) {
-            const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-            const dateDisplay = `${day} ${getMonthName(month)} ${year}`;
             
-            const index = selectedDates.findIndex(d => d.dateString === dateString);
-            
-            if (index === -1) {
-                // Add date if not already selected
-                selectedDates.push({
-                    dateString: dateString,
-                    display: dateDisplay,
-                    day: day,
-                    month: month,
-                    year: year
-                });
-                cell.classList.add('selected');
-            } else {
-                // Remove date if already selected
-                selectedDates.splice(index, 1);
-                cell.classList.remove('selected');
-            }
-            
-            // Update selected dates display
-            updateSelectedDatesDisplay();
-        }
-        
-        // Update the display of selected dates
-        function updateSelectedDatesDisplay() {
-            const container = document.getElementById('selected-dates-list');
-            
-            if (selectedDates.length === 0) {
-                container.innerHTML = '<p>No dates selected yet. Click on weekend dates in the calendar above.</p>';
-                return;
-            }
-            
-            // Sort dates chronologically
-            selectedDates.sort((a, b) => {
-                return new Date(a.dateString) - new Date(b.dateString);
-            });
-            
-            // Create HTML for selected dates
-            container.innerHTML = '';
-            selectedDates.forEach((dateObj, index) => {
-                const dateItem = document.createElement('div');
-                dateItem.className = 'selected-date-item';
-                dateItem.innerHTML = `
-                    <span>${dateObj.display}</span>
-                    <span class="remove-date" data-index="${index}">×</span>
-                `;
-                container.appendChild(dateItem);
-            });
-            
-            // Add event listeners to remove buttons
-            document.querySelectorAll('.remove-date').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    const removedDate = selectedDates[index];
+            // Toggle date selection
+            function toggleDateSelection(cell, year, month, day) {
+                const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                const dateDisplay = `${day} ${getMonthName(month)} ${year}`;
+                
+                const index = selectedDates.findIndex(d => d.dateString === dateString);
+                
+                if (index === -1) {
+                    // Add date if not already selected
+                    selectedDates.push({
+                        dateString: dateString,
+                        display: dateDisplay,
+                        day: day,
+                        month: month,
+                        year: year
+                    });
+                    cell.classList.add('selected');
+                } else {
+                    // Remove date if already selected
                     selectedDates.splice(index, 1);
-                    
-                    // Update calendar display if the month is currently shown
-                    if (removedDate.month === currentMonth && removedDate.year === currentYear) {
-                        generateCalendar(currentMonth, currentYear);
-                    }
-                    
-                    // Update selected dates display
-                    updateSelectedDatesDisplay();
-                });
-            });
-        }
-        
-        // Helper function to get month name
-        function getMonthName(monthIndex) {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                                "July", "August", "September", "October", "November", "December"];
-            return monthNames[monthIndex];
-        }
-        
-        // Initialize the calendar
-        generateCalendar(currentMonth, currentYear);
-        
-        // Previous month button
-        document.getElementById('prev-month').addEventListener('click', function() {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateCalendar(currentMonth, currentYear);
-        });
-        
-        // Next month button
-        document.getElementById('next-month').addEventListener('click', function() {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            generateCalendar(currentMonth, currentYear);
-        });
-        
-        // Trip type selection
-        const tripTypeOptions = document.querySelectorAll('.trip-type-option');
-        tripTypeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected class from all options
-                tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
-                
-                // Add selected class to clicked option
-                this.classList.add('selected');
-                
-                // Show relevant details
-                const tripType = this.getAttribute('data-type');
-                document.querySelectorAll('.trip-type-details').forEach(detail => {
-                    detail.classList.remove('active');
-                });
-                document.getElementById(`${tripType}-details`).classList.add('active');
-            });
-        });
-        
-        // Form submission
-        document.getElementById('submit-preferences').addEventListener('click', function() {
-            // Reset error message before validation
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.style.display = 'none';
-            
-            // Validate form
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            
-            if (!name || !email || !phone) {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Please fill in all required fields.';
-                return;
-            }
-            
-            if (selectedDates.length === 0) {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Please select at least one date.';
-                return;
-            }
-            
-            // Get selected trip type
-            let selectedTripType = '';
-            document.querySelectorAll('.trip-type-option').forEach(option => {
-                if (option.classList.contains('selected')) {
-                    selectedTripType = option.getAttribute('data-type');
+                    cell.classList.remove('selected');
                 }
-            });
-            
-            if (!selectedTripType) {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Please select a trip type.';
-                return;
+                
+                // Update selected dates display
+                updateSelectedDatesDisplay();
             }
             
-            // Prepare data for submission
-            const formData = {
-                name: name,
-                email: email,
-                phone: phone,
-                participants: document.getElementById('participants').value,
-                experience: document.getElementById('experience').value,
-                comments: document.getElementById('comments').value,
-                selectedDates: selectedDates.map(d => d.display),
-                tripType: selectedTripType
-            };
-            
-            // Show loading state
-            const submitButton = document.getElementById('submit-preferences');
-            submitButton.textContent = 'Submitting...';
-            submitButton.disabled = true;
-            
-            // Submit to Google Sheets
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec';
-            
-            // Log data for debugging
-            console.log('Submitting data:', formData);
-            
-            fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                mode: 'cors'
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response:', data);
+            // Update the display of selected dates
+            function updateSelectedDatesDisplay() {
+                const container = document.getElementById('selected-dates-list');
                 
-                if (data.result === 'success') {
-                    document.getElementById('confirmation-message').style.display = 'block';
-                    document.getElementById('error-message').style.display = 'none';
-                    
-                    // Reset form
-                    document.getElementById('name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('phone').value = '';
-                    document.getElementById('participants').value = '1';
-                    document.getElementById('experience').value = 'beginner';
-                    document.getElementById('comments').value = '';
-                    
-                    // Reset selected dates
-                    selectedDates = [];
-                    updateSelectedDatesDisplay();
-                    generateCalendar(currentMonth, currentYear);
-                    
-                    // Reset trip type
+                if (selectedDates.length === 0) {
+                    container.innerHTML = '<p>No dates selected yet. Click on weekend dates in the calendar above.</p>';
+                    return;
+                }
+                
+                // Sort dates chronologically
+                selectedDates.sort((a, b) => {
+                    return new Date(a.dateString) - new Date(b.dateString);
+                });
+                
+                // Create HTML for selected dates
+                container.innerHTML = '';
+                selectedDates.forEach((dateObj, index) => {
+                    const dateItem = document.createElement('div');
+                    dateItem.className = 'selected-date-item';
+                    dateItem.innerHTML = `
+                        <span>${dateObj.display}</span>
+                        <span class="remove-date" data-index="${index}">×</span>
+                    `;
+                    container.appendChild(dateItem);
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-date').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const removedDate = selectedDates[index];
+                        selectedDates.splice(index, 1);
+                        
+                        // Update calendar display if the month is currently shown
+                        if (removedDate.month === currentMonth && removedDate.year === currentYear) {
+                            generateCalendar(currentMonth, currentYear);
+                        }
+                        
+                        // Update selected dates display
+                        updateSelectedDatesDisplay();
+                    });
+                });
+            }
+            
+            // Helper function to get month name
+            function getMonthName(monthIndex) {
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"];
+                return monthNames[monthIndex];
+            }
+            
+            // Initialize the calendar
+            generateCalendar(currentMonth, currentYear);
+            
+            // Previous month button
+            document.getElementById('prev-month').addEventListener('click', function() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+            
+            // Next month button
+            document.getElementById('next-month').addEventListener('click', function() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+            
+            // Trip type selection
+            const tripTypeOptions = document.querySelectorAll('.trip-type-option');
+            tripTypeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
                     tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Show relevant details
+                    const tripType = this.getAttribute('data-type');
                     document.querySelectorAll('.trip-type-details').forEach(detail => {
                         detail.classList.remove('active');
                     });
-                } else {
-                    errorMessage.style.display = 'block';
-                    errorMessage.textContent = 'Server error: ' + (data.error || 'Unknown error');
+                    document.getElementById(`${tripType}-details`).classList.add('active');
+                });
+            });
+            
+            // Form submission
+            document.getElementById('submit-preferences').addEventListener('click', function() {
+                // Validate form
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!name || !email || !phone) {
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'Please fill in all required fields.';
+                    return;
                 }
                 
-                // Reset button
-                submitButton.textContent = 'Submit Preferences';
-                submitButton.disabled = false;
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'There was an error submitting your preferences: ' + error.message;
+                if (selectedDates.length === 0) {
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'Please select at least one date.';
+                    return;
+                }
                 
-                // Reset button
-                submitButton.textContent = 'Submit Preferences';
-                submitButton.disabled = false;
+                // Get selected trip type
+                let selectedTripType = '';
+                document.querySelectorAll('.trip-type-option').forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        selectedTripType = option.getAttribute('data-type');
+                    }
+                });
+                
+                if (!selectedTripType) {
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'Please select a trip type.';
+                    return;
+                }
+                
+                // Reset error message before submission
+                document.getElementById('error-message').style.display = 'none';
+                
+                // Prepare data for submission
+                const formData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    participants: document.getElementById('participants').value,
+                    experience: document.getElementById('experience').value,
+                    comments: document.getElementById('comments').value,
+                    selectedDates: selectedDates.map(d => d.display),
+                    tripType: selectedTripType
+                };
+                
+                // Show loading state
+                document.getElementById('submit-preferences').textContent = 'Submitting...';
+                document.getElementById('submit-preferences').disabled = true;
+                
+                // Submit to Google Sheets
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec';
+                
+                // Log data for debugging
+                console.log('Submitting data:', formData);
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response:', data);
+                    
+                    if (data.result === 'success') {
+                        document.getElementById('confirmation-message').style.display = 'block';
+                        document.getElementById('error-message').style.display = 'none';
+                        
+                        // Reset form
+                        document.getElementById('name').value = '';
+                        document.getElementById('email').value = '';
+                        document.getElementById('phone').value = '';
+                        document.getElementById('participants').value = '1';
+                        document.getElementById('experience').value = 'beginner';
+                        document.getElementById('comments').value = '';
+                        
+                        // Reset selected dates
+                        selectedDates = [];
+                        updateSelectedDatesDisplay();
+                        generateCalendar(currentMonth, currentYear);
+                        
+                        // Reset trip type
+                        tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
+                        document.querySelectorAll('.trip-type-details').forEach(detail => {
+                            detail.classList.remove('active');
+                        });
+                    } else {
+                        document.getElementById('error-message').style.display = 'block';
+                        document.getElementById('error-message').textContent = 'Server error: ' + (data.error || 'Unknown error');
+                    }
+                    
+                    // Reset button
+                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
+                    document.getElementById('submit-preferences').disabled = false;
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'There was an error submitting your preferences: ' + error.message;
+                    
+                    // Reset button
+                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
+                    document.getElementById('submit-preferences').disabled = false;
+                });
             });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
