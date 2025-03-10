@@ -16,26 +16,26 @@
             --error: #ea4335;
             --success: #34a853;
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: var(--light-bg);
             color: var(--text);
             line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         header {
             background-color: var(--primary);
             color: white;
@@ -44,55 +44,55 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         header h1 {
             text-align: center;
             font-size: 28px;
         }
-        
+
         .header-subtitle {
             text-align: center;
             color: rgba(255, 255, 255, 0.9);
             font-size: 16px;
             margin-top: 5px;
         }
-        
+
         .main-content {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
         }
-        
+
         @media (min-width: 768px) {
             .main-content {
                 grid-template-columns: 300px 1fr;
             }
         }
-        
+
         .trip-info, .calendar-container, .preferences-container, .response-form {
             background: white;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         h2 {
             color: var(--primary-dark);
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
         }
-        
+
         .trip-info ul {
             list-style-type: none;
         }
-        
+
         .trip-info li {
             margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
         }
-        
+
         .trip-info li:before {
             content: "•";
             color: var(--primary);
@@ -100,23 +100,23 @@
             position: absolute;
             left: 0;
         }
-        
+
         .calendar-container {
             margin-bottom: 20px;
         }
-        
+
         .month-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
-        
+
         .month-display {
             font-size: 18px;
             font-weight: bold;
         }
-        
+
         .nav-btn {
             background: var(--primary);
             color: white;
@@ -126,23 +126,23 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        
+
         .nav-btn:hover {
             background-color: var(--primary-dark);
         }
-        
+
         .calendar {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .calendar th {
             background-color: var(--primary);
             color: white;
             padding: 10px;
             text-align: center;
         }
-        
+
         .calendar td {
             border: 1px solid var(--border);
             padding: 10px;
@@ -151,44 +151,44 @@
             vertical-align: top;
             position: relative;
         }
-        
+
         .calendar td:hover {
             background-color: var(--light-bg);
         }
-        
+
         .calendar .date {
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
         }
-        
+
         .calendar .other-month {
             color: var(--text-light);
             background-color: rgba(0, 0, 0, 0.03);
         }
-        
+
         .calendar .weekend {
             background-color: rgba(26, 115, 232, 0.1);
         }
-        
+
         .calendar .selectable {
             cursor: pointer;
         }
-        
+
         .calendar .selected {
             background-color: rgba(26, 115, 232, 0.3);
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
         }
-        
+
         input[type="text"],
         input[type="email"],
         input[type="tel"],
@@ -200,7 +200,7 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        
+
         input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="tel"]:focus,
@@ -209,14 +209,14 @@
             outline: none;
             border-color: var(--primary);
         }
-        
+
         .trip-type-options {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 10px;
         }
-        
+
         .trip-type-option {
             flex: 1;
             min-width: 150px;
@@ -227,17 +227,17 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .trip-type-option:hover {
             background-color: var(--light-bg);
         }
-        
+
         .trip-type-option.selected {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
         }
-        
+
         .submit-btn {
             background-color: var(--secondary);
             color: white;
@@ -246,19 +246,19 @@
             padding: 12px 20px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color: 0.3s;
             width: 100%;
             margin-top: 20px;
         }
-        
+
         .submit-btn:hover {
             background-color: #2d8f48;
         }
-        
+
         .selected-dates {
             margin-top: 15px;
         }
-        
+
         .selected-date-item {
             background-color: var(--light-bg);
             padding: 8px 12px;
@@ -268,19 +268,19 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .remove-date {
             color: var(--error);
             cursor: pointer;
             font-weight: bold;
         }
-        
+
         .trips-summary {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid var(--border);
         }
-        
+
         .confirmation-message {
             background-color: rgba(52, 168, 83, 0.1);
             border-left: 4px solid var(--success);
@@ -288,7 +288,7 @@
             margin-top: 20px;
             display: none;
         }
-        
+
         .error-message {
             background-color: rgba(234, 67, 53, 0.1);
             border-left: 4px solid var(--error);
@@ -296,12 +296,12 @@
             margin-top: 20px;
             display: none;
         }
-        
+
         .trip-type-details {
             margin-top: 15px;
             display: none;
         }
-        
+
         .trip-type-details.active {
             display: block;
         }
@@ -313,7 +313,7 @@
             <h1>Mangaluru Pelagic Trip Calendar</h1>
             <p class="header-subtitle">Select dates and preferences for upcoming pelagic trips</p>
         </header>
-        
+
         <div class="main-content">
             <aside>
                 <div class="trip-info">
@@ -328,7 +328,7 @@
                     </ul>
                 </div>
             </aside>
-            
+
             <main>
                 <div class="calendar-container">
                     <h2>Select Your Preferred Dates</h2>
@@ -354,17 +354,17 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div class="preferences-container">
                     <h2>Trip Preferences</h2>
-                    
+
                     <div class="selected-dates" id="selected-dates-container">
                         <label>Your Selected Dates:</label>
                         <div id="selected-dates-list">
                             <p>No dates selected yet. Click on weekend dates in the calendar above.</p>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Preferred Trip Type:</label>
                         <div class="trip-type-options">
@@ -373,38 +373,38 @@
                             <div class="trip-type-option" data-type="overnight">Overnight</div>
                         </div>
                     </div>
-                    
+
                     <div class="trip-type-details" id="half-day-details">
                         <p>Half day trips run from 6:00 AM to 1:00 PM, allowing for birdwatching during peak morning hours. These trips are ideal for those who want a taste of pelagic birding without committing to a full day at sea.</p>
                     </div>
-                    
+
                     <div class="trip-type-details" id="full-day-details">
                         <p>Full day trips run from 6:00 AM to 6:00 PM, providing comprehensive coverage of pelagic zones and maximizing bird sighting opportunities throughout the day.</p>
                     </div>
-                    
+
                     <div class="trip-type-details" id="overnight-details">
                         <p>Overnight trips run from 6:00 AM to 6:00 PM the next day, allowing for observation of nocturnal species and distant pelagic zones unreachable during day trips.</p>
                     </div>
                 </div>
-                
+
                 <div class="response-form">
                     <h2>Contact Information</h2>
-                    
+
                     <div class="form-group">
                         <label for="name">Full Name:</label>
                         <input type="text" id="name" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email">Email Address:</label>
                         <input type="email" id="email" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
                         <input type="tel" id="phone" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="participants">Number of Participants:</label>
                         <select id="participants">
@@ -421,7 +421,7 @@
                             <option value="more">More than 10</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="experience">Birding Experience Level:</label>
                         <select id="experience">
@@ -431,18 +431,18 @@
                             <option value="expert">Expert</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="comments">Additional Comments or Special Requests:</label>
                         <textarea id="comments" rows="4"></textarea>
                     </div>
-                    
+
                     <button id="submit-preferences" class="submit-btn">Submit Preferences</button>
-                    
+
                     <div id="confirmation-message" class="confirmation-message">
                         Your preferences have been submitted successfully! We will contact you shortly with more information.
                     </div>
-                    
+
                     <div id="error-message" class="error-message">
                         There was an error submitting your preferences. Please try again or contact us directly.
                     </div>
@@ -457,34 +457,34 @@
             const today = new Date();
             let currentMonth = today.getMonth();
             let currentYear = today.getFullYear();
-            
+
             // Selected dates array
             let selectedDates = [];
-            
+
             // Generate the calendar
             function generateCalendar(month, year) {
                 const firstDay = new Date(year, month, 1);
                 const lastDay = new Date(year, month + 1, 0);
                 const daysInMonth = lastDay.getDate();
                 const startingDay = firstDay.getDay(); // Day of week (0-6)
-                
+
                 // Update month display
                 const monthNames = ["January", "February", "March", "April", "May", "June",
                                     "July", "August", "September", "October", "November", "December"];
                 document.getElementById('month-display').textContent = `${monthNames[month]} ${year}`;
-                
+
                 // Clear previous calendar
                 const calendarBody = document.getElementById('calendar-body');
                 calendarBody.innerHTML = '';
-                
+
                 // Create calendar rows and cells
                 let date = 1;
                 for (let i = 0; i < 6; i++) { // Up to 6 rows
                     const row = document.createElement('tr');
-                    
+
                     for (let j = 0; j < 7; j++) { // 7 days in a week
                         const cell = document.createElement('td');
-                        
+
                         if (i === 0 && j < startingDay) {
                             // Empty cells before the first day of month
                             const prevMonthLastDay = new Date(year, month, 0).getDate();
@@ -500,47 +500,47 @@
                         } else {
                             // Current month cells
                             cell.innerHTML = `<span class="date">${date}</span>`;
-                            
+
                             // Highlight weekends
                             if (j === 0 || j === 6) {
                                 cell.classList.add('weekend', 'selectable');
-                                
+
                                 // Date string for comparison
                                 const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-                                
+
                                 // Check if date is already selected
                                 if (selectedDates.some(d => d.dateString === dateString)) {
                                     cell.classList.add('selected');
                                 }
-                                
+
                                 // Add click event for weekend dates
                                 cell.addEventListener('click', function() {
                                     toggleDateSelection(this, year, month, date);
                                 });
                             }
-                            
+
                             date++;
                         }
-                        
+
                         row.appendChild(cell);
                     }
-                    
+
                     calendarBody.appendChild(row);
-                    
+
                     // Stop if we've reached the end of the month
                     if (date > daysInMonth) {
                         break;
                     }
                 }
             }
-            
+
             // Toggle date selection
             function toggleDateSelection(cell, year, month, day) {
                 const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
                 const dateDisplay = `${day} ${getMonthName(month)} ${year}`;
-                
+
                 const index = selectedDates.findIndex(d => d.dateString === dateString);
-                
+
                 if (index === -1) {
                     // Add date if not already selected
                     selectedDates.push({
@@ -556,25 +556,25 @@
                     selectedDates.splice(index, 1);
                     cell.classList.remove('selected');
                 }
-                
+
                 // Update selected dates display
                 updateSelectedDatesDisplay();
             }
-            
+
             // Update the display of selected dates
             function updateSelectedDatesDisplay() {
                 const container = document.getElementById('selected-dates-list');
-                
+
                 if (selectedDates.length === 0) {
                     container.innerHTML = '<p>No dates selected yet. Click on weekend dates in the calendar above.</p>';
                     return;
                 }
-                
+
                 // Sort dates chronologically
                 selectedDates.sort((a, b) => {
                     return new Date(a.dateString) - new Date(b.dateString);
                 });
-                
+
                 // Create HTML for selected dates
                 container.innerHTML = '';
                 selectedDates.forEach((dateObj, index) => {
@@ -586,35 +586,35 @@
                     `;
                     container.appendChild(dateItem);
                 });
-                
+
                 // Add event listeners to remove buttons
                 document.querySelectorAll('.remove-date').forEach(button => {
                     button.addEventListener('click', function() {
-                        const index = parseInt(this.getAttribute('data-index'));
+                        const index = parseInt(this.getAttribute('data-index'), 10);
                         const removedDate = selectedDates[index];
                         selectedDates.splice(index, 1);
-                        
+
                         // Update calendar display if the month is currently shown
                         if (removedDate.month === currentMonth && removedDate.year === currentYear) {
                             generateCalendar(currentMonth, currentYear);
                         }
-                        
+
                         // Update selected dates display
                         updateSelectedDatesDisplay();
                     });
                 });
             }
-            
+
             // Helper function to get month name
             function getMonthName(monthIndex) {
                 const monthNames = ["January", "February", "March", "April", "May", "June",
                                     "July", "August", "September", "October", "November", "December"];
                 return monthNames[monthIndex];
             }
-            
+
             // Initialize the calendar
             generateCalendar(currentMonth, currentYear);
-            
+
             // Previous month button
             document.getElementById('prev-month').addEventListener('click', function() {
                 currentMonth--;
@@ -624,7 +624,7 @@
                 }
                 generateCalendar(currentMonth, currentYear);
             });
-            
+
             // Next month button
             document.getElementById('next-month').addEventListener('click', function() {
                 currentMonth++;
@@ -634,17 +634,17 @@
                 }
                 generateCalendar(currentMonth, currentYear);
             });
-            
+
             // Trip type selection
             const tripTypeOptions = document.querySelectorAll('.trip-type-option');
             tripTypeOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     // Remove selected class from all options
                     tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
-                    
+
                     // Add selected class to clicked option
                     this.classList.add('selected');
-                    
+
                     // Show relevant details
                     const tripType = this.getAttribute('data-type');
                     document.querySelectorAll('.trip-type-details').forEach(detail => {
@@ -653,26 +653,26 @@
                     document.getElementById(`${tripType}-details`).classList.add('active');
                 });
             });
-            
+
             // Form submission
             document.getElementById('submit-preferences').addEventListener('click', function() {
                 // Validate form
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
-                
+
                 if (!name || !email || !phone) {
                     document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').textContent = 'Please fill in all required fields.';
                     return;
                 }
-                
+
                 if (selectedDates.length === 0) {
                     document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').textContent = 'Please select at least one date.';
                     return;
                 }
-                
+
                 // Get selected trip type
                 let selectedTripType = '';
                 document.querySelectorAll('.trip-type-option').forEach(option => {
@@ -680,16 +680,16 @@
                         selectedTripType = option.getAttribute('data-type');
                     }
                 });
-                
+
                 if (!selectedTripType) {
                     document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').textContent = 'Please select a trip type.';
                     return;
                 }
-                
+
                 // Reset error message before submission
                 document.getElementById('error-message').style.display = 'none';
-                
+
                 // Prepare data for submission
                 const formData = {
                     name: name,
@@ -701,33 +701,38 @@
                     selectedDates: selectedDates.map(d => d.display),
                     tripType: selectedTripType
                 };
-                
+
                 // Show loading state
                 document.getElementById('submit-preferences').textContent = 'Submitting...';
                 document.getElementById('submit-preferences').disabled = true;
-                
-                // Submit to Google Sheets
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec';
-                
+
+                // Submit to Google Sheets  (Replace with your actual Google Script URL)
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec'; // Replace with YOUR Google Apps Script URL
+
                 // Log data for debugging
                 console.log('Submitting data:', formData);
-                
+
                 fetch(scriptURL, {
                     method: 'POST',
                     body: JSON.stringify(formData),
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    mode: 'cors'
+                    mode: 'cors' // Important for cross-origin requests
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Response:', data);
-                    
-                    if (data.result === 'success') {
+
+                    if (data.result === 'success') {  //  Check for a 'success' property in your response
                         document.getElementById('confirmation-message').style.display = 'block';
                         document.getElementById('error-message').style.display = 'none';
-                        
+
                         // Reset form
                         document.getElementById('name').value = '';
                         document.getElementById('email').value = '';
@@ -735,22 +740,23 @@
                         document.getElementById('participants').value = '1';
                         document.getElementById('experience').value = 'beginner';
                         document.getElementById('comments').value = '';
-                        
+
                         // Reset selected dates
                         selectedDates = [];
                         updateSelectedDatesDisplay();
                         generateCalendar(currentMonth, currentYear);
-                        
+
                         // Reset trip type
                         tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
                         document.querySelectorAll('.trip-type-details').forEach(detail => {
                             detail.classList.remove('active');
                         });
                     } else {
+                        // Handle server-side errors (e.g., from your Google Apps Script)
                         document.getElementById('error-message').style.display = 'block';
                         document.getElementById('error-message').textContent = 'Server error: ' + (data.error || 'Unknown error');
                     }
-                    
+
                     // Reset button
                     document.getElementById('submit-preferences').textContent = 'Submit Preferences';
                     document.getElementById('submit-preferences').disabled = false;
@@ -759,7 +765,7 @@
                     console.error('Fetch error:', error);
                     document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').textContent = 'There was an error submitting your preferences: ' + error.message;
-                    
+
                     // Reset button
                     document.getElementById('submit-preferences').textContent = 'Submit Preferences';
                     document.getElementById('submit-preferences').disabled = false;
