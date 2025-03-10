@@ -3,774 +3,715 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mangaluru Pelagic Trip Calendar</title>
+    <title>Pelagic Bird Watching Trips - Mangaluru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <style>
         :root {
-            --primary: #1a73e8;
-            --primary-dark: #0d47a1;
-            --secondary: #34a853;
-            --light-bg: #f8f9fa;
-            --border: #dadce0;
-            --text: #202124;
-            --text-light: #5f6368;
-            --error: #ea4335;
-            --success: #34a853;
+            --ocean-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --submit-green: #34a853;
         }
-
+        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: var(--light-bg);
-            color: var(--text);
+            background-color: var(--light-blue);
+            color: #333;
             line-height: 1.6;
         }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
+        
         header {
-            background-color: var(--primary);
+            background-color: var(--ocean-blue);
             color: white;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
             text-align: center;
-            font-size: 28px;
-        }
-
-        .header-subtitle {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
-            margin-top: 5px;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .main-content {
-                grid-template-columns: 300px 1fr;
-            }
-        }
-
-        .trip-info, .calendar-container, .preferences-container, .response-form {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .trip-info ul {
-            list-style-type: none;
-        }
-
-        .trip-info li {
-            margin-bottom: 15px;
-            padding-left: 25px;
+            padding: 2rem 1rem;
             position: relative;
+            overflow: hidden;
         }
-
-        .trip-info li:before {
-            content: "•";
-            color: var(--primary);
-            font-weight: bold;
+        
+        header::after {
+            content: "";
             position: absolute;
+            bottom: 0;
             left: 0;
+            right: 0;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100"><path fill="white" d="M0,64L80,58.7C160,53,320,43,480,48C640,53,800,75,960,80C1120,85,1280,75,1360,69.3L1440,64L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path></svg>') no-repeat bottom;
+            background-size: 100% 100%;
         }
-
-        .calendar-container {
-            margin-bottom: 20px;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
-
-        .month-navigation {
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            margin: 2rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .hero-text {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+        }
+        
+        .calendar-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .trip-options {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .trip-option {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 30%;
+            min-width: 250px;
+            margin: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .trip-option h3 {
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .form-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .trips-container {
+            margin-top: 2rem;
+        }
+        
+        .trip-item {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
             align-items: center;
-            margin-bottom: 15px;
         }
-
-        .month-display {
-            font-size: 18px;
-            font-weight: bold;
+        
+        .trip-selections {
+            margin: 2rem 0;
         }
-
-        .nav-btn {
-            background: var(--primary);
+        
+        .trip-selection {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trip-selection .remove-trip {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #f44336;
             color: white;
             border: none;
-            border-radius: 4px;
-            padding: 8px 15px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .trip-display {
+            font-size: 1.05rem;
+            color: var(--dark-blue);
+        }
+        
+        .trip-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .trip-field {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        button {
+            background-color: var(--ocean-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
-        .nav-btn:hover {
-            background-color: var(--primary-dark);
+        
+        button:hover {
+            background-color: var(--dark-blue);
         }
-
-        .calendar {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .calendar th {
-            background-color: var(--primary);
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .calendar td {
-            border: 1px solid var(--border);
-            padding: 10px;
-            text-align: center;
-            height: 80px;
-            vertical-align: top;
-            position: relative;
-        }
-
-        .calendar td:hover {
-            background-color: var(--light-bg);
-        }
-
-        .calendar .date {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .calendar .other-month {
-            color: var(--text-light);
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-
-        .calendar .weekend {
-            background-color: rgba(26, 115, 232, 0.1);
-        }
-
-        .calendar .selectable {
-            cursor: pointer;
-        }
-
-        .calendar .selected {
-            background-color: rgba(26, 115, 232, 0.3);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="tel"]:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .trip-type-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .trip-type-option {
-            flex: 1;
-            min-width: 150px;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .trip-type-option:hover {
-            background-color: var(--light-bg);
-        }
-
-        .trip-type-option.selected {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
+        
         .submit-btn {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color: 0.3s;
-            width: 100%;
-            margin-top: 20px;
+            background-color: var(--submit-green);
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            margin-top: 1rem;
         }
-
+        
         .submit-btn:hover {
-            background-color: #2d8f48;
+            background-color: #2a8943;
         }
-
-        .selected-dates {
-            margin-top: 15px;
+        
+        .add-trip-btn {
+            margin-top: 1rem;
         }
-
-        .selected-date-item {
-            background-color: var(--light-bg);
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .remove-date {
-            color: var(--error);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .trips-summary {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-        }
-
-        .confirmation-message {
-            background-color: rgba(52, 168, 83, 0.1);
-            border-left: 4px solid var(--success);
-            padding: 15px;
-            margin-top: 20px;
+        
+        #confirmation-message {
             display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+            text-align: center;
         }
-
-        .error-message {
-            background-color: rgba(234, 67, 53, 0.1);
-            border-left: 4px solid var(--error);
-            padding: 15px;
-            margin-top: 20px;
-            display: none;
+        
+        .special-requests {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: var(--light-blue);
+            border-radius: 10px;
+            text-align: center;
         }
-
-        .trip-type-details {
-            margin-top: 15px;
-            display: none;
+        
+        .date-interest-count {
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: normal;
         }
-
-        .trip-type-details.active {
-            display: block;
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: var(--dark-blue);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .trip-option {
+                width: 100%;
+                margin: 1rem 0;
+            }
+            
+            .trip-fields {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .trip-field {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Pelagic Bird Watching Trips</h1>
+        <p class="hero-text">Experience the thrill of observing pelagic birds in their natural habitat off the coast of Mangaluru, Karnataka, India</p>
+    </header>
+    
     <div class="container">
-        <header>
-            <h1>Mangaluru Pelagic Trip Calendar</h1>
-            <p class="header-subtitle">Select dates and preferences for upcoming pelagic trips</p>
-        </header>
-
-        <div class="main-content">
-            <aside>
-                <div class="trip-info">
-                    <h2>About Pelagic Trips</h2>
-                    <ul>
-                        <li><strong>Half Day Trip:</strong> 6:00 AM to 1:00 PM (Morning to Afternoon)</li>
-                        <li><strong>Full Day Trip:</strong> 6:00 AM to 6:00 PM (Morning to Evening)</li>
-                        <li><strong>Overnight Trip:</strong> 6:00 AM to 6:00 PM (Next Day)</li>
-                        <li>Trips normally conducted on weekends</li>
-                        <li>Weekday trips available on special request</li>
-                        <li>All trips depart from Mangaluru</li>
-                    </ul>
+        <section>
+            <h2>Choose Your Weekend Adventure</h2>
+            <p>Select your preferred weekend dates for your bird watching trips. We offer trips on weekends (Saturday and Sunday) only, with weekday trips available upon special request for groups.</p>
+        </section>
+        
+        <section>
+            <h2>Trip Options</h2>
+            <div class="trip-options">
+                <div class="trip-option">
+                    <h3>Half Day</h3>
+                    <p><strong>Time:</strong> 6 AM to 1 PM</p>
+                    <p><strong>Duration:</strong> 7 hours</p>
+                    <p>Perfect for beginners or those with limited time. Experience the morning hours when birds are most active.</p>
                 </div>
-            </aside>
-
-            <main>
-                <div class="calendar-container">
-                    <h2>Select Your Preferred Dates</h2>
-                    <div class="month-navigation">
-                        <button id="prev-month" class="nav-btn">← Previous</button>
-                        <div id="month-display" class="month-display">March 2025</div>
-                        <button id="next-month" class="nav-btn">Next →</button>
-                    </div>
-                    <table class="calendar" id="calendar">
-                        <thead>
-                            <tr>
-                                <th>Sun</th>
-                                <th>Mon</th>
-                                <th>Tue</th>
-                                <th>Wed</th>
-                                <th>Thu</th>
-                                <th>Fri</th>
-                                <th>Sat</th>
-                            </tr>
-                        </thead>
-                        <tbody id="calendar-body">
-                            <!-- Calendar will be generated here -->
-                        </tbody>
-                    </table>
+                
+                <div class="trip-option">
+                    <h3>Full Day</h3>
+                    <p><strong>Time:</strong> 6 AM to 6 PM</p>
+                    <p><strong>Duration:</strong> 12 hours</p>
+                    <p>For enthusiasts who want to maximize their bird watching experience in a single day.</p>
                 </div>
-
-                <div class="preferences-container">
-                    <h2>Trip Preferences</h2>
-
-                    <div class="selected-dates" id="selected-dates-container">
-                        <label>Your Selected Dates:</label>
-                        <div id="selected-dates-list">
-                            <p>No dates selected yet. Click on weekend dates in the calendar above.</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Preferred Trip Type:</label>
-                        <div class="trip-type-options">
-                            <div class="trip-type-option" data-type="half-day">Half Day</div>
-                            <div class="trip-type-option" data-type="full-day">Full Day</div>
-                            <div class="trip-type-option" data-type="overnight">Overnight</div>
-                        </div>
-                    </div>
-
-                    <div class="trip-type-details" id="half-day-details">
-                        <p>Half day trips run from 6:00 AM to 1:00 PM, allowing for birdwatching during peak morning hours. These trips are ideal for those who want a taste of pelagic birding without committing to a full day at sea.</p>
-                    </div>
-
-                    <div class="trip-type-details" id="full-day-details">
-                        <p>Full day trips run from 6:00 AM to 6:00 PM, providing comprehensive coverage of pelagic zones and maximizing bird sighting opportunities throughout the day.</p>
-                    </div>
-
-                    <div class="trip-type-details" id="overnight-details">
-                        <p>Overnight trips run from 6:00 AM to 6:00 PM the next day, allowing for observation of nocturnal species and distant pelagic zones unreachable during day trips.</p>
-                    </div>
+                
+                <div class="trip-option">
+                    <h3>Overnight</h3>
+                    <p><strong>Time:</strong> 6 AM Saturday to 6 PM Sunday</p>
+                    <p><strong>Duration:</strong> 36 hours</p>
+                    <p>The ultimate experience! Observe nocturnal species and enjoy two full days of bird watching.</p>
                 </div>
-
-                <div class="response-form">
-                    <h2>Contact Information</h2>
-
-                    <div class="form-group">
-                        <label for="name">Full Name:</label>
-                        <input type="text" id="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email Address:</label>
-                        <input type="email" id="email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="participants">Number of Participants:</label>
-                        <select id="participants">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="more">More than 10</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="experience">Birding Experience Level:</label>
-                        <select id="experience">
-                            <option value="beginner">Beginner</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
-                            <option value="expert">Expert</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="comments">Additional Comments or Special Requests:</label>
-                        <textarea id="comments" rows="4"></textarea>
-                    </div>
-
-                    <button id="submit-preferences" class="submit-btn">Submit Preferences</button>
-
-                    <div id="confirmation-message" class="confirmation-message">
-                        Your preferences have been submitted successfully! We will contact you shortly with more information.
-                    </div>
-
-                    <div id="error-message" class="error-message">
-                        There was an error submitting your preferences. Please try again or contact us directly.
-                    </div>
+            </div>
+        </section>
+        
+        <section class="form-section">
+            <h2>Express Your Interest</h2>
+            <p>Fill out the form below to show your interest in participating. Trips require a minimum of 12 participants to be confirmed.</p>
+            
+            <form id="interest-form">
+                <div class="form-group">
+                    <label for="name">Name*</label>
+                    <input type="text" id="name" name="name" required>
                 </div>
-            </main>
-        </div>
+                
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Contact Number*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">Experience Level*</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">-- Select Experience Level --</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                
+                <h3>Trip Selections</h3>
+                <div id="trip-selections"></div>
+                
+                <button type="button" id="add-trip-btn" class="add-trip-btn">+ Add Trip</button>
+                
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+            
+            <div id="confirmation-message">
+                Thank you for showing interest! We will contact you once the trip is confirmed.
+            </div>
+        </section>
+        
+        <section class="special-requests">
+            <h3>Special Requests</h3>
+            <p>For special requests, such as weekday trips for groups, please contact us at <strong>info@pelagicbirdwatching.com</strong></p>
+        </section>
     </div>
-
+    
+    <footer>
+        <p>&copy; 2025 Pelagic Bird Watching - Mangaluru | All Rights Reserved</p>
+    </footer>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Current date information
+            // Trip selections container
+            const tripSelectionsContainer = document.getElementById('trip-selections');
+            const addTripBtn = document.getElementById('add-trip-btn');
+            const form = document.getElementById('interest-form');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            
+            // Track trip selections
+            let tripSelections = [];
+            
+            // Trip interest counts (simulated data)
+            const tripInterestCounts = {};
+            
+            // Generate random interest counts for the next 3 months of weekends
             const today = new Date();
-            let currentMonth = today.getMonth();
-            let currentYear = today.getFullYear();
-
-            // Selected dates array
-            let selectedDates = [];
-
-            // Generate the calendar
-            function generateCalendar(month, year) {
-                const firstDay = new Date(year, month, 1);
-                const lastDay = new Date(year, month + 1, 0);
-                const daysInMonth = lastDay.getDate();
-                const startingDay = firstDay.getDay(); // Day of week (0-6)
-
-                // Update month display
-                const monthNames = ["January", "February", "March", "April", "May", "June",
-                                    "July", "August", "September", "October", "November", "December"];
-                document.getElementById('month-display').textContent = `${monthNames[month]} ${year}`;
-
-                // Clear previous calendar
-                const calendarBody = document.getElementById('calendar-body');
-                calendarBody.innerHTML = '';
-
-                // Create calendar rows and cells
-                let date = 1;
-                for (let i = 0; i < 6; i++) { // Up to 6 rows
-                    const row = document.createElement('tr');
-
-                    for (let j = 0; j < 7; j++) { // 7 days in a week
-                        const cell = document.createElement('td');
-
-                        if (i === 0 && j < startingDay) {
-                            // Empty cells before the first day of month
-                            const prevMonthLastDay = new Date(year, month, 0).getDate();
-                            const prevDate = prevMonthLastDay - (startingDay - j - 1);
-                            cell.innerHTML = `<span class="date">${prevDate}</span>`;
-                            cell.classList.add('other-month');
-                        } else if (date > daysInMonth) {
-                            // Empty cells after the last day of month
-                            const nextDate = date - daysInMonth;
-                            cell.innerHTML = `<span class="date">${nextDate}</span>`;
-                            cell.classList.add('other-month');
-                            date++;
-                        } else {
-                            // Current month cells
-                            cell.innerHTML = `<span class="date">${date}</span>`;
-
-                            // Highlight weekends
-                            if (j === 0 || j === 6) {
-                                cell.classList.add('weekend', 'selectable');
-
-                                // Date string for comparison
-                                const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-
-                                // Check if date is already selected
-                                if (selectedDates.some(d => d.dateString === dateString)) {
-                                    cell.classList.add('selected');
-                                }
-
-                                // Add click event for weekend dates
-                                cell.addEventListener('click', function() {
-                                    toggleDateSelection(this, year, month, date);
-                                });
-                            }
-
-                            date++;
+            for (let i = 0; i < 90; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                // Only add counts for weekends
+                if (date.getDay() === 0 || date.getDay() === 6) {
+                    const dateStr = date.toISOString().split('T')[0];
+                    // Random number between 0 and 11
+                    tripInterestCounts[dateStr] = Math.floor(Math.random() * 11);
+                }
+            }
+            
+            // Generate a unique ID for each trip selection
+            function generateTripId() {
+                return 'trip_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            }
+            
+            // Check if a date is already selected in another trip
+            function isDateConflict(tripType, selectedDate, tripId) {
+                const dateObj = new Date(selectedDate);
+                const day = dateObj.getDay(); // 0 is Sunday, 6 is Saturday
+                
+                for (const trip of tripSelections) {
+                    if (trip.id === tripId) continue; // Skip current trip being edited
+                    
+                    const tripDateObj = new Date(trip.date);
+                    
+                    // If this is an overnight trip starting on Saturday
+                    if (tripType === 'overnight' && day === 6) {
+                        const sunday = new Date(dateObj);
+                        sunday.setDate(dateObj.getDate() + 1);
+                        
+                        // Check if any existing trip falls on this Saturday or the following Sunday
+                        if (isSameDate(tripDateObj, dateObj) || isSameDate(tripDateObj, sunday)) {
+                            return true;
                         }
-
-                        row.appendChild(cell);
                     }
-
-                    calendarBody.appendChild(row);
-
-                    // Stop if we've reached the end of the month
-                    if (date > daysInMonth) {
-                        break;
+                    // If this is an overnight trip that another user has selected
+                    else if (trip.type === 'overnight') {
+                        const tripSunday = new Date(tripDateObj);
+                        tripSunday.setDate(tripDateObj.getDate() + 1);
+                        
+                        // Check if our selected date falls on the overnight trip's Saturday or Sunday
+                        if (isSameDate(dateObj, tripDateObj) || isSameDate(dateObj, tripSunday)) {
+                            return true;
+                        }
+                    }
+                    // For Half day or Full day, check if same day is already selected with same trip type
+                    else if (isSameDate(tripDateObj, dateObj)) {
+                        return true;
                     }
                 }
+                
+                return false;
             }
-
-            // Toggle date selection
-            function toggleDateSelection(cell, year, month, day) {
-                const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-                const dateDisplay = `${day} ${getMonthName(month)} ${year}`;
-
-                const index = selectedDates.findIndex(d => d.dateString === dateString);
-
-                if (index === -1) {
-                    // Add date if not already selected
-                    selectedDates.push({
-                        dateString: dateString,
-                        display: dateDisplay,
-                        day: day,
-                        month: month,
-                        year: year
-                    });
-                    cell.classList.add('selected');
-                } else {
-                    // Remove date if already selected
-                    selectedDates.splice(index, 1);
-                    cell.classList.remove('selected');
+            
+            // Check if two dates are the same (ignoring time)
+            function isSameDate(date1, date2) {
+                return date1.getFullYear() === date2.getFullYear() &&
+                       date1.getMonth() === date2.getMonth() &&
+                       date1.getDate() === date2.getDate();
+            }
+            
+            // Format date for display
+            function formatDate(dateString) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString(undefined, options);
+            }
+            
+            // Validate trip data before adding
+            function validateTripData(tripType, tripDate, tripId) {
+                if (!tripType) {
+                    alert('Please select a trip type.');
+                    return false;
                 }
-
-                // Update selected dates display
-                updateSelectedDatesDisplay();
+                
+                if (!tripDate) {
+                    alert('Please select a date for your trip.');
+                    return false;
+                }
+                
+                const dateObj = new Date(tripDate);
+                const day = dateObj.getDay();
+                
+                // For overnight trips, only allow selection of Saturdays
+                if (tripType === 'overnight' && day !== 6) {
+                    alert('Overnight trips must start on a Saturday.');
+                    return false;
+                }
+                
+                // Check for date conflicts
+                if (isDateConflict(tripType, tripDate, tripId)) {
+                    alert('This date conflicts with another trip you have selected. Please choose a different date.');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Format date in a user-friendly way
+            function formatDisplayDate(dateString) {
+                const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+                return new Date(dateString).toLocaleDateString(undefined, options);
             }
 
-            // Update the display of selected dates
-            function updateSelectedDatesDisplay() {
-                const container = document.getElementById('selected-dates-list');
-
-                if (selectedDates.length === 0) {
-                    container.innerHTML = '<p>No dates selected yet. Click on weekend dates in the calendar above.</p>';
+            // Update the interest count display
+            function updateInterestCount(tripId) {
+                const dateInput = document.getElementById(`${tripId}_date`);
+                const interestCountElement = document.getElementById(`${tripId}_interest_count`);
+                
+                if (!dateInput.value) {
+                    interestCountElement.textContent = '';
                     return;
                 }
-
-                // Sort dates chronologically
-                selectedDates.sort((a, b) => {
-                    return new Date(a.dateString) - new Date(b.dateString);
-                });
-
-                // Create HTML for selected dates
-                container.innerHTML = '';
-                selectedDates.forEach((dateObj, index) => {
-                    const dateItem = document.createElement('div');
-                    dateItem.className = 'selected-date-item';
-                    dateItem.innerHTML = `
-                        <span>${dateObj.display}</span>
-                        <span class="remove-date" data-index="${index}">×</span>
-                    `;
-                    container.appendChild(dateItem);
-                });
-
-                // Add event listeners to remove buttons
-                document.querySelectorAll('.remove-date').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.getAttribute('data-index'), 10);
-                        const removedDate = selectedDates[index];
-                        selectedDates.splice(index, 1);
-
-                        // Update calendar display if the month is currently shown
-                        if (removedDate.month === currentMonth && removedDate.year === currentYear) {
-                            generateCalendar(currentMonth, currentYear);
+                
+                const dateStr = dateInput.value.split(' ')[0]; // Get just the date part
+                const count = tripInterestCounts[dateStr] || 0;
+                interestCountElement.textContent = `(${count}/12 spots filled)`;
+                
+                // Change color based on spots filled
+                if (count >= 10) {
+                    interestCountElement.style.color = '#34a853'; // Green for almost full
+                } else if (count >= 6) {
+                    interestCountElement.style.color = '#fbbc05'; // Yellow for halfway full
+                } else {
+                    interestCountElement.style.color = '#ea4335'; // Red for low interest
+                }
+            }
+            
+            // Update trip display text
+            function updateTripDisplay(tripId) {
+                const tripType = document.getElementById(`${tripId}_type`).value;
+                const tripDate = document.getElementById(`${tripId}_date`).value;
+                const displayDiv = document.getElementById(`${tripId}_display`);
+                
+                if (!tripType || !tripDate) {
+                    displayDiv.style.display = 'none';
+                    return;
+                }
+                
+                displayDiv.style.display = 'block';
+                
+                if (tripType === 'overnight') {
+                    // For overnight, show start and end date
+                    const startDate = new Date(tripDate);
+                    const endDate = new Date(tripDate);
+                    endDate.setDate(endDate.getDate() + 1);
+                    
+                    displayDiv.innerHTML = `<strong>Selected:</strong> Overnight trip: ${formatDisplayDate(startDate)} to ${formatDisplayDate(endDate)}`;
+                } else if (tripType === 'half-day') {
+                    displayDiv.innerHTML = `<strong>Selected:</strong> Half Day on ${formatDisplayDate(tripDate)}`;
+                } else if (tripType === 'full-day') {
+                    displayDiv.innerHTML = `<strong>Selected:</strong> Full Day on ${formatDisplayDate(tripDate)}`;
+                }
+            }
+            
+            // Create a new trip selection element
+            function createTripSelection() {
+                const tripId = generateTripId();
+                
+                const tripDiv = document.createElement('div');
+                tripDiv.className = 'trip-selection';
+                tripDiv.id = tripId;
+                
+                tripDiv.innerHTML = `
+                    <button type="button" class="remove-trip">Remove</button>
+                    <div class="trip-fields">
+                        <div class="trip-field">
+                            <label for="${tripId}_type">Trip Type*</label>
+                            <select id="${tripId}_type" name="${tripId}_type" required>
+                                <option value="">-- Select Trip Type --</option>
+                                <option value="half-day">Half Day (6 AM - 1 PM)</option>
+                                <option value="full-day">Full Day (6 AM - 6 PM)</option>
+                                <option value="overnight">Overnight (Sat 6 AM - Sun 6 PM)</option>
+                            </select>
+                        </div>
+                        <div class="trip-field">
+                            <label for="${tripId}_date">Date* <span id="${tripId}_interest_count" class="date-interest-count"></span></label>
+                            <input type="text" id="${tripId}_date" name="${tripId}_date" class="date-picker" required>
+                        </div>
+                    </div>
+                    <div class="trip-display" id="${tripId}_display" style="display: none; margin-top: 15px; padding: 10px; background-color: #e8f0fe; border-radius: 5px;"></div>
+                `;
+                
+                tripSelectionsContainer.appendChild(tripDiv);
+                
+                // Initialize date picker for this trip
+                const datePicker = flatpickr(`#${tripId}_date`, {
+                    minDate: "today",
+                    disable: [
+                        function(date) {
+                            // Disable all days except weekends
+                            return (date.getDay() !== 0 && date.getDay() !== 6);
                         }
-
-                        // Update selected dates display
-                        updateSelectedDatesDisplay();
-                    });
+                    ],
+                    onChange: function(selectedDates, dateStr) {
+                        // Update interest count whenever date changes
+                        updateInterestCount(tripId);
+                    }
                 });
-            }
-
-            // Helper function to get month name
-            function getMonthName(monthIndex) {
-                const monthNames = ["January", "February", "March", "April", "May", "June",
-                                    "July", "August", "September", "October", "November", "December"];
-                return monthNames[monthIndex];
-            }
-
-            // Initialize the calendar
-            generateCalendar(currentMonth, currentYear);
-
-            // Previous month button
-            document.getElementById('prev-month').addEventListener('click', function() {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                generateCalendar(currentMonth, currentYear);
-            });
-
-            // Next month button
-            document.getElementById('next-month').addEventListener('click', function() {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                generateCalendar(currentMonth, currentYear);
-            });
-
-            // Trip type selection
-            const tripTypeOptions = document.querySelectorAll('.trip-type-option');
-            tripTypeOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
-
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-
-                    // Show relevant details
-                    const tripType = this.getAttribute('data-type');
-                    document.querySelectorAll('.trip-type-details').forEach(detail => {
-                        detail.classList.remove('active');
-                    });
-                    document.getElementById(`${tripType}-details`).classList.add('active');
+                
+                // Add event listener to trip type dropdown
+                const tripTypeSelect = document.getElementById(`${tripId}_type`);
+                tripTypeSelect.addEventListener('change', function() {
+                    const tripType = this.value;
+                    
+                    // Reconfigure date picker based on trip type
+                    if (tripType === 'overnight') {
+                        // For overnight trips, only allow Saturdays
+                        datePicker.set('disable', [
+                            function(date) {
+                                // Only enable Saturdays
+                                return date.getDay() !== 6;
+                            }
+                        ]);
+                    } else {
+                        // For half day and full day, allow both Saturday and Sunday
+                        datePicker.set('disable', [
+                            function(date) {
+                                // Only enable weekends
+                                return (date.getDay() !== 0 && date.getDay() !== 6);
+                            }
+                        ]);
+                    }
+                    
+                    // Clear the date when trip type changes
+                    datePicker.clear();
+                    
+                    // Update the display
+                    updateTripDisplay(tripId);
                 });
+                
+                // Add event listener to date picker
+                document.getElementById(`${tripId}_date`).addEventListener('change', function() {
+                    updateTripDisplay(tripId);
+                    updateInterestCount(tripId);
+                });
+                
+                // Add event listener to remove button
+                const removeBtn = tripDiv.querySelector('.remove-trip');
+                removeBtn.addEventListener('click', function() {
+                    // Find the index of this trip in our array
+                    const index = tripSelections.findIndex(trip => trip.id === tripId);
+                    if (index !== -1) {
+                        tripSelections.splice(index, 1);
+                    }
+                    
+                    // Remove the trip selection from the DOM
+                    tripDiv.remove();
+                });
+                
+                // Initialize empty interest count
+                updateInterestCount(tripId);
+                
+                return { tripDiv, tripId };
+            }
+            
+            // Add trip button click handler
+            addTripBtn.addEventListener('click', function() {
+                const { tripId } = createTripSelection();
+                
+                // Add a placeholder for this trip in our selections array
+                tripSelections.push({
+                    id: tripId,
+                    type: '',
+                    date: ''
+                });
+                
+                // Update display (will be hidden initially)
+                updateTripDisplay(tripId);
             });
-
-            // Form submission
-            document.getElementById('submit-preferences').addEventListener('click', function() {
-                // Validate form
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
-
-                if (!name || !email || !phone) {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').textContent = 'Please fill in all required fields.';
+                const experience = document.getElementById('experience').value;
+                
+                // Basic validation
+                if (!name || !email || !phone || !experience) {
+                    alert('Please fill in all required fields.');
                     return;
                 }
-
-                if (selectedDates.length === 0) {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').textContent = 'Please select at least one date.';
+                
+                // Validate trip selections
+                const tripDivs = document.querySelectorAll('.trip-selection');
+                if (tripDivs.length === 0) {
+                    alert('Please add at least one trip selection.');
                     return;
                 }
-
-                // Get selected trip type
-                let selectedTripType = '';
-                document.querySelectorAll('.trip-type-option').forEach(option => {
-                    if (option.classList.contains('selected')) {
-                        selectedTripType = option.getAttribute('data-type');
+                
+                // Update our trip selections array with the latest values
+                let tripSelectionsValid = true;
+                tripSelections = [];
+                
+                tripDivs.forEach(tripDiv => {
+                    const tripId = tripDiv.id;
+                    const tripType = document.getElementById(`${tripId}_type`).value;
+                    const tripDate = document.getElementById(`${tripId}_date`).value;
+                    
+                    if (!validateTripData(tripType, tripDate, tripId)) {
+                        tripSelectionsValid = false;
+                        return;
                     }
+                    
+                    tripSelections.push({
+                        id: tripId,
+                        type: tripType,
+                        date: tripDate
+                    });
                 });
-
-                if (!selectedTripType) {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').textContent = 'Please select a trip type.';
+                
+                if (!tripSelectionsValid) {
                     return;
                 }
-
-                // Reset error message before submission
-                document.getElementById('error-message').style.display = 'none';
-
-                // Prepare data for submission
-                const formData = {
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    participants: document.getElementById('participants').value,
-                    experience: document.getElementById('experience').value,
-                    comments: document.getElementById('comments').value,
-                    selectedDates: selectedDates.map(d => d.display),
-                    tripType: selectedTripType
-                };
-
-                // Show loading state
-                document.getElementById('submit-preferences').textContent = 'Submitting...';
-                document.getElementById('submit-preferences').disabled = true;
-
-                // Submit to Google Sheets  (Replace with your actual Google Script URL)
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbwkytDpyzqKrodZrpACSQgP35de-JK0qTO7JC8PGtcw4JJRy9pqWNBqj4a-5sBccODM4Q/exec'; // Replace with YOUR Google Apps Script URL
-
-                // Log data for debugging
-                console.log('Submitting data:', formData);
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    mode: 'cors' // Important for cross-origin requests
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response:', data);
-
-                    if (data.result === 'success') {  //  Check for a 'success' property in your response
-                        document.getElementById('confirmation-message').style.display = 'block';
-                        document.getElementById('error-message').style.display = 'none';
-
-                        // Reset form
-                        document.getElementById('name').value = '';
-                        document.getElementById('email').value = '';
-                        document.getElementById('phone').value = '';
-                        document.getElementById('participants').value = '1';
-                        document.getElementById('experience').value = 'beginner';
-                        document.getElementById('comments').value = '';
-
-                        // Reset selected dates
-                        selectedDates = [];
-                        updateSelectedDatesDisplay();
-                        generateCalendar(currentMonth, currentYear);
-
-                        // Reset trip type
-                        tripTypeOptions.forEach(opt => opt.classList.remove('selected'));
-                        document.querySelectorAll('.trip-type-details').forEach(detail => {
-                            detail.classList.remove('active');
-                        });
-                    } else {
-                        // Handle server-side errors (e.g., from your Google Apps Script)
-                        document.getElementById('error-message').style.display = 'block';
-                        document.getElementById('error-message').textContent = 'Server error: ' + (data.error || 'Unknown error');
-                    }
-
-                    // Reset button
-                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
-                    document.getElementById('submit-preferences').disabled = false;
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').textContent = 'There was an error submitting your preferences: ' + error.message;
-
-                    // Reset button
-                    document.getElementById('submit-preferences').textContent = 'Submit Preferences';
-                    document.getElementById('submit-preferences').disabled = false;
+                
+                // Simulate form submission
+                console.log('Form Data:', {
+                    name,
+                    email,
+                    phone,
+                    experience,
+                    trips: tripSelections
                 });
+                
+                // Show confirmation message
+                form.style.display = 'none';
+                confirmationMessage.style.display = 'block';
+                
+                // Scroll to confirmation message
+                confirmationMessage.scrollIntoView({ behavior: 'smooth' });
             });
+            
+            // Add initial trip selection
+            createTripSelection();
         });
     </script>
 </body>
